@@ -1,0 +1,86 @@
+# Food Ordering App with Categories
+
+menu = {
+    "Starters": {
+        1: {"item": "Veg Soup", "price": 70},
+        2: {"item": "Paneer Tikka", "price": 120},
+        3: {"item": "Veg Manchurian", "price": 100}
+    },
+    "Main Course": {
+        4: {"item": "Veg Biryani", "price": 180},
+        5: {"item": "Paneer Butter Masala", "price": 160},
+        6: {"item": "Chapati (2 pcs)", "price": 40}
+    },
+    "Desserts": {
+        7: {"item": "Ice Cream", "price": 60},
+        8: {"item": "Gulab Jamun (2 pcs)", "price": 50}
+    },
+    "Drinks": {
+        9: {"item": "Cold Drink", "price": 40},
+        10: {"item": "Fresh Juice", "price": 80}
+    }
+}
+
+order_list = []  # Store orders
+
+
+def show_menu():
+    print("\n=========== MENU ===========")
+    for category, items in menu.items():
+        print(f"\n--- {category} ---")
+        for key, value in items.items():
+            print(f"{key}. {value['item']} - ₹{value['price']}")
+    print("\n0. Finish Order")
+    print("============================")
+
+
+
+
+
+def take_order():
+    while True:
+        try:
+            choice = int(input("Enter item number to order (0 to finish): "))
+            if choice == 0:
+                break
+
+            found = False
+            for category in menu.values():
+                if choice in category:
+                    qty = int(input("Enter quantity: "))
+                    order_list.append((category[choice], qty))
+                    print(" Item added to order!")
+                    found = True
+                    break
+
+            if not found:
+                print(" Invalid item number!")
+
+        except ValueError:
+            print(" Enter a valid number!")
+def generate_bill():
+    print("\n Final Bill")
+    print("============================")
+    total = 0
+    for entry in order_list:
+        item = entry[0]["item"]
+        price = entry[0]["price"]
+        qty = entry[1]
+        amount = price * qty
+        total += amount
+        print(f"{item} x {qty} = ₹{amount}")
+    print("----------------------------")
+    print(f"Total Amount = ₹{total}")
+    print("============================")
+    print(" Thank you! Please Visit Again ")
+
+
+# Main Program Execution
+print(" Welcome to the Restaurant Food Ordering App ")
+show_menu()
+take_order()
+
+if order_list:
+    generate_bill()
+else:
+    print("You didn't order anything ")
